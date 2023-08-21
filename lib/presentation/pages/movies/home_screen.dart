@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:pelis_wiki/config/constants/environment.dart';
+
 class HomeScreen extends StatelessWidget {
 //variable para llamar la ruta de la screen
   static const name = 'home-screen';
@@ -8,8 +10,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body:  Placeholder(),
+    return  Scaffold(
+      body:  Center(
+        child: Text(Environment.movieDbKey),
+      )
     );
   }
 }
