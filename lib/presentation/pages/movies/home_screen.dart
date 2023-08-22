@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:pelis_wiki/config/constants/environment.dart';
+//import 'package:pelis_wiki/config/constants/environment.dart';
 
 class HomeScreen extends StatelessWidget {
 //variable para llamar la ruta de la screen
