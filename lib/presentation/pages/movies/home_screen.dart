@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pelis_wiki/presentation/providers/movies/movies_providers.dart';
+
 import 'package:pelis_wiki/presentation/widgets/widgets.dart';
+
+
+
+import '../../providers/providers.dart';
 
 //import 'package:pelis_wiki/config/constants/environment.dart';
 
@@ -13,7 +17,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: _HomeView());
+    return const Scaffold(
+      body: _HomeView(),
+     bottomNavigationBar: CustomButtomNavigation(),
+      );
   }
 }
 
@@ -34,14 +41,15 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
+    //final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
+
+    final slideShowMovies = ref.watch(moviesSlideShowProvider);
 
     return Column(
       children: [
+        const CustomAppbar(),
 
- const CustomAppbar(),
-
- MoviesSlideShow(movies: nowPlayingMovies)
+        MoviesSlideShow(movies: slideShowMovies)
 
         // Expanded(
         //   child: ListView.builder(
@@ -54,7 +62,6 @@ class _HomeViewState extends ConsumerState<_HomeView> {
         //     },
         //   ),
         // )
-
       ],
     );
   }
