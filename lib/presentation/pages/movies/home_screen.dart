@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:pelis_wiki/presentation/widgets/widgets.dart';
 
-
-
 import '../../providers/providers.dart';
 
 //import 'package:pelis_wiki/config/constants/environment.dart';
@@ -19,8 +17,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: _HomeView(),
-     bottomNavigationBar: CustomButtomNavigation(),
-      );
+      bottomNavigationBar: CustomButtomNavigation(),
+    );
   }
 }
 
@@ -41,6 +39,9 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    // DateTime now = DateTime.now();
+    // DateTime date = DateTime(now.month);
+
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
 
     final slideShowMovies = ref.watch(moviesSlideShowProvider);
@@ -51,14 +52,11 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
         MoviesSlideShow(movies: slideShowMovies),
 
-MovieHorizontalListview(
-  movie: nowPlayingMovies,
-  title: 'En Cines',
-  subTitle: 'Lunes 20',
-  
-  )
-
-
+        MovieHorizontalListview(
+          movies: nowPlayingMovies,
+          title: 'En Cines',
+          subTitle: 'Lunes 20',
+        )
 
         // Expanded(
         //   child: ListView.builder(
