@@ -11,7 +11,7 @@ class CustomAppbar extends StatelessWidget {
     return SafeArea(
       bottom: false,
         child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: SizedBox(
         width: double.infinity,
         child: Row(
@@ -20,7 +20,8 @@ class CustomAppbar extends StatelessWidget {
             const SizedBox(width: 5),
            Text('PeliTecaCR', style: titleStyle),
 
-const Spacer(),
+          const Spacer(),
+
            IconButton(onPressed: (){}, icon: const Icon(Icons.search))
           ],
         ),

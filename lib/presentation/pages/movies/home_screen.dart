@@ -46,29 +46,51 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
     final slideShowMovies = ref.watch(moviesSlideShowProvider);
 
-    return Column(
-      children: [
-        const CustomAppbar(),
+    return CustomScrollView(
+      slivers: [
+       const SliverAppBar(
+        floating: true,
+        flexibleSpace: FlexibleSpaceBar(
+          title: CustomAppbar(),
+          titlePadding: EdgeInsets.zero,
+        ),
+       ),
 
-        MoviesSlideShow(movies: slideShowMovies),
+        SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+          return Column(
+            children: [
 
-        MovieHorizontalListview(
-          movies: nowPlayingMovies,
-          title: 'En Cines',
-          subTitle: 'Lunes 20',
-        )
-
-        // Expanded(
-        //   child: ListView.builder(
-        //     itemCount: nowPlayingMovies.length,
-        //     itemBuilder: (BuildContext context, int index) {
-        //       final movie = nowPlayingMovies[index];
-        //       return ListTile(
-        //         title: Text(movie.title),
-        //       );
-        //     },
-        //   ),
-        // )
+             // const CustomAppbar(),
+              MoviesSlideShow(movies: slideShowMovies),
+              MovieHorizontalListview(
+                movies: nowPlayingMovies,
+                title: 'En Cines',
+                subTitle: 'Lunes 20',
+                loadNextPage: () {
+                  ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+                },
+              ),
+              MovieHorizontalListview(
+                movies: nowPlayingMovies,
+                title: 'Proximamente',
+                subTitle: 'En este mes',
+                loadNextPage: () {
+                  ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+                },
+              ),
+              MovieHorizontalListview(
+                movies: nowPlayingMovies,
+                title: 'Populares',
+                // subTitle: 'En este mes',
+                loadNextPage: () {
+                  ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+                },
+              ),
+              const SizedBox(height: 30)
+            ],
+          );
+        }, childCount: 1)),
       ],
     );
   }
