@@ -4,6 +4,7 @@ import 'package:pelis_wiki/config/constants/environment.dart';
 import 'package:pelis_wiki/domain/datasources/movies_datasource.dart';
 import 'package:pelis_wiki/domain/entities/movie.dart';
 import 'package:pelis_wiki/infraestructure/mappers/movie_mapper.dart';
+import 'package:pelis_wiki/infraestructure/models/moviedb/movie_details.dart';
 import 'package:pelis_wiki/infraestructure/models/moviedb/moviedb_response.dart';
 
 class MoviedbDatasource extends MoviesDataSource {
@@ -14,7 +15,6 @@ class MoviedbDatasource extends MoviesDataSource {
         'api_key': Environment.movieDbKey,
         'language': 'es-MX'
       }));
-
 
 //*AQUI SE MUESTRAN LAS QUE ESTAN AHORA REPRODUCIENDO
   @override
@@ -33,7 +33,7 @@ class MoviedbDatasource extends MoviesDataSource {
     return movies;
   }
 
-//AQUI SE MUESTRA LAS MAS POPULARES 
+//AQUI SE MUESTRA LAS MAS POPULARES
   @override
   Future<List<Movie>> getPopular({int page = 1}) async {
     final response =
@@ -48,10 +48,11 @@ class MoviedbDatasource extends MoviesDataSource {
 
     return movies;
   }
-  
+
   @override
   Future<List<Movie>> getUpcoming({int page = 1}) async {
-  final response = await dio.get('/movie/upcoming', queryParameters: {'page': page});
+    final response =
+        await dio.get('/movie/upcoming', queryParameters: {'page': page});
     final movieDBResponse = MovieDbResponse.fromJson(response.data);
 
     final List<Movie> movies = movieDBResponse.results
@@ -62,10 +63,11 @@ class MoviedbDatasource extends MoviesDataSource {
 
     return movies;
   }
-  
+
   @override
   Future<List<Movie>> getTopRate({int page = 1}) async {
-   final response = await dio.get('/movie/top_rated', queryParameters: {'page': page});
+    final response =
+        await dio.get('/movie/top_rated', queryParameters: {'page': page});
     final movieDBResponse = MovieDbResponse.fromJson(response.data);
 
     final List<Movie> movies = movieDBResponse.results
@@ -75,5 +77,18 @@ class MoviedbDatasource extends MoviesDataSource {
     //aqui obtengo el listado de movie
 
     return movies;
+  }
+
+  @override
+  Future<Movie> getMovieById(String id) async {
+    final response = await dio.get('/movie/$id');
+
+    if (response.statusCode != 200)throw Exception('Movie with id: $id not Found');
+
+    final movieDetails = MovieDetails.fromJson(response.data);
+
+    final Movie movie = MovieMapper.movieDetailsToEntity(movieDetails);
+
+    return movie;
   }
 }
