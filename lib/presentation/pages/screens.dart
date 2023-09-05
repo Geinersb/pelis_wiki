@@ -2,3 +2,4 @@
 
 export 'package:pelis_wiki/presentation/pages/movies/home_screen.dart';
 
+export 'movies/movie_screen.dart';

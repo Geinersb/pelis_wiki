@@ -15,23 +15,63 @@ class MoviedbDatasource extends MoviesDataSource {
         'language': 'es-MX'
       }));
 
+
+//*AQUI SE MUESTRAN LAS QUE ESTAN AHORA REPRODUCIENDO
   @override
   Future<List<Movie>> getNowPlaying({int page = 1}) async {
-
-    final response = await dio.get('/movie/now_playing',
-queryParameters: {
-  'page': page
-
-}
-  );
+    final response =
+        await dio.get('/movie/now_playing', queryParameters: {'page': page});
 
     final movieDBResponse = MovieDbResponse.fromJson(response.data);
 
     final List<Movie> movies = movieDBResponse.results
-    .where((moviedb) => moviedb.posterPath != 'no-poster')    
-    .map(
-      (moviedb) => MovieMapper.movieDBToEntity(moviedb)
-      ).toList();
+        .map((moviedb) => MovieMapper.movieDBToEntity(moviedb))
+        .where((moviedb) => moviedb.posterPath != 'no-poster')
+        .toList();
+    //aqui obtengo el listado de movie
+
+    return movies;
+  }
+
+//AQUI SE MUESTRA LAS MAS POPULARES 
+  @override
+  Future<List<Movie>> getPopular({int page = 1}) async {
+    final response =
+        await dio.get('/movie/popular', queryParameters: {'page': page});
+    final movieDBResponse = MovieDbResponse.fromJson(response.data);
+
+    final List<Movie> movies = movieDBResponse.results
+        .map((moviedb) => MovieMapper.movieDBToEntity(moviedb))
+        .where((moviedb) => moviedb.posterPath != 'no-poster')
+        .toList();
+    //aqui obtengo el listado de movie
+
+    return movies;
+  }
+  
+  @override
+  Future<List<Movie>> getUpcoming({int page = 1}) async {
+  final response = await dio.get('/movie/upcoming', queryParameters: {'page': page});
+    final movieDBResponse = MovieDbResponse.fromJson(response.data);
+
+    final List<Movie> movies = movieDBResponse.results
+        .map((moviedb) => MovieMapper.movieDBToEntity(moviedb))
+        .where((moviedb) => moviedb.posterPath != 'no-poster')
+        .toList();
+    //aqui obtengo el listado de movie
+
+    return movies;
+  }
+  
+  @override
+  Future<List<Movie>> getTopRate({int page = 1}) async {
+   final response = await dio.get('/movie/top_rated', queryParameters: {'page': page});
+    final movieDBResponse = MovieDbResponse.fromJson(response.data);
+
+    final List<Movie> movies = movieDBResponse.results
+        .map((moviedb) => MovieMapper.movieDBToEntity(moviedb))
+        .where((moviedb) => moviedb.posterPath != 'no-poster')
+        .toList();
     //aqui obtengo el listado de movie
 
     return movies;
