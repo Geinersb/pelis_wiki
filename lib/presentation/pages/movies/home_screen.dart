@@ -104,7 +104,16 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                   ref.read(topRateMoviesProvider.notifier).loadNextPage();
                 },
               ),
-              const SizedBox(height: 30)
+              const SizedBox(height: 30),
+
+              SizedBox(
+                 child: Chip(label: const Text('© GSB Technology'),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      ),
+              )
+          
+
+
             ],
           );
         }, childCount: 1)),
