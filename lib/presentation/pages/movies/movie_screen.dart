@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pelis_wiki/domain/entities/movie.dart';
@@ -109,7 +110,7 @@ class _MovieDetails extends StatelessWidget {
 //Mostrar actores
         _ActorsByMovie(movieId: movie.id.toString()),
 
-        const SizedBox(height:50)
+        const SizedBox(height: 50)
       ],
     );
   }
@@ -141,24 +142,31 @@ class _ActorsByMovie extends ConsumerWidget {
             padding: const EdgeInsets.all(8.0),
             width: 135,
             child: Column(
-crossAxisAlignment: CrossAxisAlignment.start,
-                //actor photo
+              crossAxisAlignment: CrossAxisAlignment.start,
+              //actor photo
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadiusDirectional.circular(20),
-                  child: Image.network(actor.profilePath,
-                  height: 180,
-                  width: 135,
-                  fit: BoxFit.cover,
+                FadeInRight(
+                  child: ClipRRect(
+                    borderRadius: BorderRadiusDirectional.circular(20),
+                    child: Image.network(
+                      actor.profilePath,
+                      height: 180,
+                      width: 135,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
 
                 //Nombre
-               const SizedBox(height: 5),
-               Text(actor.name,maxLines: 2),
-               Text(actor.character??'',maxLines: 2,
-               style: const TextStyle(fontWeight: FontWeight.bold,overflow: TextOverflow.ellipsis),
-               ),
+                const SizedBox(height: 5),
+                Text(actor.name, maxLines: 2),
+                Text(
+                  actor.character ?? '',
+                  maxLines: 2,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      overflow: TextOverflow.ellipsis),
+                ),
               ],
             ),
           );
@@ -194,6 +202,10 @@ class _CustomSliverAppBar extends StatelessWidget {
               child: Image.network(
                 movie.posterPath,
                 fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress != null) return SizedBox();
+                  return FadeIn(child: child);
+                },
               ),
             ),
             const SizedBox.expand(
