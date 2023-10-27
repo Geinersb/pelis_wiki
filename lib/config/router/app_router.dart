@@ -3,11 +3,17 @@ import 'package:pelis_wiki/presentation/pages/screens.dart';
 
 //aqui establezco la ruta que va a llamar a todas las pantallas que voy a tener
 
-final appRouter = GoRouter(initialLocation: '/', routes: [
+final appRouter = GoRouter(
+  initialLocation: '/home/0', 
+  routes: [
   GoRoute(
-    path: '/',
+    path: '/home/:page',
     name: HomeScreen.name,
-    builder: (context, state) => const HomeScreen(),
+    builder: (context, state) {
+      final pageIndex = int.parse(state.pathParameters['page'] ?? '0');
+
+      return  HomeScreen(pageIndex:pageIndex);
+    },
     routes: [
  GoRoute(
     path: 'movie/:id',
@@ -21,5 +27,10 @@ final appRouter = GoRouter(initialLocation: '/', routes: [
   ),
     ]
   ),
+
+  GoRoute(path: '/',
+  redirect: ( _ , __) => '/home/0' ,
+  ),
  
-]);
+]
+);
