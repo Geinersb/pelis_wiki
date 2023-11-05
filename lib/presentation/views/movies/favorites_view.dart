@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pelis_wiki/presentation/providers/providers.dart';
 import 'package:pelis_wiki/presentation/widgets/widgets.dart';
 
@@ -38,11 +39,29 @@ class FavoritesViewState extends ConsumerState<FavoritesView> {
   Widget build(BuildContext context) {
     final favoriteMovies = ref.watch(favoriteMoviesProvider).values.toList();
 
-    return Scaffold(
-      body: MovieMasonry(
-        loadNextPage: loadNextPage,
-        movies: favoriteMovies
+    if (favoriteMovies.isEmpty) {
+      final colors = Theme.of(context).colorScheme;
+
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(Icons.favorite_outline_sharp, size: 60, color: colors.primary),
+            Text('Uppss!!',style: TextStyle(fontSize: 30,color: colors.primary)),
+            const Text('No tienes Pelis Favoritas',style: TextStyle(fontSize: 20,color: Colors.black45)),
+
+            const SizedBox(height:80),
+            FilledButton.tonal(onPressed: () => context.go('/home/0'),
+             child: const Text('Agrega tus favoritos')
+             )
+          ],
         ),
+      );
+    }
+
+    return Scaffold(
+      body: MovieMasonry(loadNextPage: loadNextPage, movies: favoriteMovies),
     );
   }
 }
