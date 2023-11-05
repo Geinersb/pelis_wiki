@@ -41,8 +41,8 @@ class CustomButtomNavigation extends StatelessWidget {
           label: 'Inicio',
         ),
         NavigationDestination(
-          icon: Icon(Icons.category),
-          label: 'Categorias',
+          icon: Icon(Icons.thumbs_up_down_rounded),
+          label: 'Populares',
         ),
         NavigationDestination(
           icon: Icon(Icons.favorite),
