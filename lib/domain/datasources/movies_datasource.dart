@@ -1,4 +1,5 @@
-import 'package:pelis_wiki/domain/entities/movie.dart';
+import 'package:pelis_wiki/domain/entities/entities.dart';
+
 
 abstract class MoviesDataSource {
   Future<List<Movie>> getNowPlaying({int page = 1});
@@ -12,4 +13,8 @@ abstract class MoviesDataSource {
   Future<Movie> getMovieById(String id);
 
   Future<List<Movie>> searchMovies(String query);
+
+   Future<List<Movie>> getSimilarMovies( int movieId );
+
+  Future<List<Video>> getYoutubeVideosById( int movieId );
 }

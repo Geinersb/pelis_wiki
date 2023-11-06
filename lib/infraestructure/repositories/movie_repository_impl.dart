@@ -1,6 +1,8 @@
 import 'package:pelis_wiki/domain/datasources/movies_datasource.dart';
-import 'package:pelis_wiki/domain/entities/movie.dart';
+
 import 'package:pelis_wiki/domain/repositories/movies_repository.dart';
+
+import '../../domain/entities/entities.dart';
 
 class MoviesRepositoryImpl extends MoviesRepository {
   final MoviesDataSource datasource;
@@ -34,5 +36,16 @@ class MoviesRepositoryImpl extends MoviesRepository {
   @override
   Future<List<Movie>> searchMovies(String query) {
     return datasource.searchMovies(query);
+  }
+
+
+    @override
+  Future<List<Movie>> getSimilarMovies(int movieId) {
+    return datasource.getSimilarMovies(movieId);
+  }
+  
+  @override
+  Future<List<Video>> getYoutubeVideosById(int movieId) {
+    return datasource.getYoutubeVideosById(movieId);
   }
 }
